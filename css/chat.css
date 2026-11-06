@@ -1,0 +1,103 @@
+@charset "utf-8";
+
+*{margin:0; padding:0;}
+#wrap{
+  margin:60px 0 0 100px;
+  width:400px;
+  box-shadow:0 2px 4px #ccc;
+}
+header{
+  background:#fff;
+  padding:30px 8px 8px;
+  position:relative;
+}
+header .btn{
+  width:12px; height:12px;
+  border-radius:50%;
+  border:none;
+  position:absolute;
+  top:8px;
+  cursor:pointer;
+}
+#close{background:#ff6059; left:8px;}
+#minbtn{background:#ffbf2f; left:26px;}
+#maxbtn{background:#29cd42; left:44px;}
+
+/* 프로필 사진 */
+header img{
+  width:80px;
+  border:1px solid #ccc;
+  vertical-align:middle;
+}
+header span{
+  font-size:14px;
+  font-weight:bold;
+  margin-left:5px;
+  color:#343434;
+}
+
+/* 대화상자 서식 */
+.chatbox{
+  height:400px;
+  background:#d7e4f2;
+  padding:10px;
+  position:relative;
+  overflow-y:auto;
+}
+
+/* 말풍선 공통서식 */
+.chatbox div{
+  margin:5px 0px;
+  max-width:300px;
+  font-size:14px;
+  display:inline-block;
+  position:relative;
+  overflow-wrap:anywhere;
+}
+/* 상대방 말풍선 */
+.bubble01{
+  background:#fff;
+  border-radius:14px 14px 14px 0;
+  padding:7px 15px; float:left;
+  clear:both;
+}
+/* 사용자 말풍선 */
+.bubble02{
+  background:#fff46d;
+  border-radius:14px 14px 0 14px;
+  padding:7px 15px;
+  float:right;
+  clear:both;
+}
+/* 푸터 입력창 서식 */
+.txt_box{
+  background:#fafafa;
+  padding:10px;
+}
+.txt_box textarea{
+  height:60px;
+  float:left;
+  width:calc(80% - 50px);
+  border-radius:3px;
+  border:1px solid #d7d7d7;
+  resize:none; /*입력박스 조절 못하게*/
+  padding:10px;
+  font-size:14px;
+}
+
+/* 전송버튼 서식 */
+#send{
+  background-color:#4a90e2;
+  width:60px; height:60px;
+  border:none; color:#fff;
+  border-radius:3px;
+  margin-left:10px;
+  float:right;
+  cursor:pointer;
+}
+#send:hover{
+  background-color:#2878cf;
+}
+
+/* 플로트 속성 해제하기 */
+.clearfix{clear:both;}
