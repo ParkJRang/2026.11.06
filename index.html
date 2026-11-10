@@ -80,15 +80,17 @@
         <img src="./images/tube.jpg" alt="프로필 사진">
         <span>프론트엔드 개발 공부중</span>
         <span class="count">&nbsp;</span>
+        <input type="button" value="다크모드" class="btn_1" id="dark_btn">
       </header>
       <!-- 대화상자 표시되는 영역 -->
       <section class="chatbox" id="chatbox">
-
       </section>
       
       <footer class="txt_box">
         <textarea name="" id="message" placeholder="대화내용이 들어갑니다."></textarea>
+        <p class="txt_count">100/100</p>
         <input type="button" value="전송" id="send">
+        <input type="button" value="초기화" id="reset">
 
         <div class="clearfix"></div>
       </footer>
@@ -120,7 +122,7 @@
           div.textContent=reply[num];
           chatbox.appendChild(div);
           chatbox.scrollTop = chatbox.scrollHeight;
-        },1000)
+        },500)
       };
 
     //메세지 전송함수
@@ -135,8 +137,10 @@
       }
       //메세지가 정상적으로 입력되면 출력하기
       const div = document.createElement('div');
+      const time = document.createElement('span');
       //div태그요소에 말풍선 서식 적용
       div.classList.add('bubble02');
+      time.classList.add('time');
       //입력 텍스트를 div에 삽입
       div.textContent = txt;
       //채팅창에 말풍선 추가하기
@@ -148,7 +152,7 @@
       //채팅창을 가장 아래로 이동하기
       chatbox.scrollTop = chatbox.scrollHeight;
       count++;
-      txtCount();
+      header.innerHTML=`<span>(메세지 수 : ${count})</span>`;
       autoReplay(); //1초후 답장 함수 호출
 
       div.addEventListener('click', function(){
@@ -156,7 +160,10 @@
         //글 개수 감소
         count--;
         //감소한 글 개수 출력
-        header.textContent=count;
+        header.innerHTML=`<span>(메세지 수 : ${count})</span>`;
+        if(count==0){
+          header.innerHTML=``;
+        };
       });
     };
     //전송 버튼 클릭시 내용 출력
@@ -167,7 +174,7 @@
       if(e.key === 'Enter'){
         e.preventDefault();
         sendMessage();
-        txtCount();
+        header.innerHTML=`<span>(메세지 수 : ${count})</span>`;
       }
     });
     //상대방 메세지 출력함수
@@ -179,20 +186,25 @@
       chatbox.scrollTop = chatbox.scrollHeight;
     };
     receiveMessage('안녕하세요.');
-    function txtCount(){
-      const span = document.createElement('span');
-      span.textContent=count;
-      header.textContent=count;
-    }
-    //사용자가 선택한 말풍선 삭제하기
-    // ut.forEach(function(div, index){
-    //   div[index].addEventListener('click',function(){
-    //     div.style.display='none';
-    //   })
-    // });
-    //사용자 작성한 글 갯수 상단 헤더에 표시하기
-    // 
-
+    //다크모드 
+    //버튼변수
+    const dark = document.getElementById('dark_btn');
+    let btn1 = 0;
+    dark.addEventListener('click',function(){
+      if(btn1==0){
+        chatbox.style.background='#111';
+        btn1=1;
+      }else{
+        chatbox.style.background='#d7e4f2';
+        btn1=0;
+      }
+    });
+    //입력창 초기화 버튼
+    const reset = document.getElementById('reset');
+    reset.addEventListener('click',function(){
+      message.value='';
+      message.focus();
+    });
   </script>
 </body>
 </html>
