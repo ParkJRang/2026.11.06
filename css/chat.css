@@ -22,6 +22,7 @@ header .btn{
 #close{background:#ff6059; left:8px;}
 #minbtn{background:#ffbf2f; left:26px;}
 #maxbtn{background:#29cd42; left:44px;}
+.btn_1{display:block; position:absolute; transform:translate(330px, -16px)}
 
 /* 프로필 사진 */
 header img{
@@ -71,6 +72,7 @@ header span{
 }
 /* 푸터 입력창 서식 */
 .txt_box{
+  position:relative;
   background:#fafafa;
   padding:10px;
 }
@@ -88,12 +90,17 @@ header span{
 /* 전송버튼 서식 */
 #send{
   background-color:#4a90e2;
-  width:60px; height:60px;
+  width:80px; height:40px;
   border:none; color:#fff;
   border-radius:3px;
   margin-left:10px;
   float:right;
   cursor:pointer;
+}
+#reset{
+  width:80px; height:30px;
+  float:right;
+  margin-top:10px;
 }
 #send:hover{
   background-color:#2878cf;
@@ -101,3 +108,13 @@ header span{
 
 /* 플로트 속성 해제하기 */
 .clearfix{clear:both;}
+/* 글자수 제한 양식 */
+.txt_count{
+  position:absolute;
+  bottom:12px; right:120px;
+  font-size:13px;
+}
+/* 입력시간 양식 */
+.time{
+  font-size:13px;
+}

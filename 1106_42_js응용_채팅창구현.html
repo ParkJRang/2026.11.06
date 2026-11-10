@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>42_js응용_채팅창 구현</title>
+  <link rel="stylesheet" href="./css/chat.css" type="text/css">
+  <style>
+    .t01{
+      border:1px solid #333;
+      border-collapse:collapse;
+    }
+    .t01 th, .t01 td{border:1px solid #333;}
+  </style>
+</head>
+<body>
+  <h2>42_js응용_채팅창 구현</h2>
+  <p>카카오 채팅창 UI구현, 사용자가 입력박스에 텍스트 입력후 '전송' 버튼 클릭시 말풍선 대화창에 표시</p>
+  <table class="t01">
+    <caption>js와 jQuery 주요 사용 메소드</caption>
+    <tr>
+      <th>기능</th>
+      <th>js문법</th>
+      <th>jQuery문법</th>
+    </tr>
+    <tr>
+      <td>객체 선택방법</td>
+      <td>document.getElementByid('id명');</td>
+      <td>$('선택자명');</td>
+    </tr>
+    <tr>
+      <td>입력값 가져오기</td>
+      <td>value</td>
+      <td>val()</td>
+    </tr>
+    <tr>
+      <td>속성 가져오기</td>
+      <td>getAttribuet()</td>
+      <td>attr()</td>
+    </tr>
+    <tr>
+      <td>속성 변경</td>
+      <td>setAttribute()</td>
+      <td>classLIst add.()</td>
+    </tr>
+    <tr>
+      <td>클래스 제거</td>
+      <td>classList.remove()</td>
+      <td>removeClass()</td>
+    </tr>
+    <tr>
+      <td>html추가</td>
+      <td>appendChild()</td>
+      <td>append()</td>
+    </tr>
+    <tr>
+      <td>이벤트 등록</td>
+      <td>addEventListener()</td>
+      <td>click()</td>
+    </tr>
+    <tr>
+      <td>객체생성</td>
+      <td>createElement</td>
+      <td>X(없음)</td>
+    </tr>
+    <tr>
+      <td>텍스트 삽입</td>
+      <td>textContent()</td>
+      <td>text()</td>
+    </tr>
+  </table>
+  <h3>실습 - 카카오 채팅창 구현</h3>
+  <div id="wrap">
+    <!-- 채팅창 헤더 -->
+      <header>
+        <input type="button" class="btn" id="close">
+        <input type="button" class="btn" id="minbtn">
+        <input type="button" class="btn" id="maxbtn">
+
+        <img src="./images/tube.jpg" alt="프로필 사진">
+        <span>프론트엔드 개발 공부중</span>
+        <span class="count">&nbsp;</span>
+        <input type="button" value="다크모드" class="btn_1" id="dark_btn">
+      </header>
+      <!-- 대화상자 표시되는 영역 -->
+      <section class="chatbox" id="chatbox">
+      </section>
+      
+      <footer class="txt_box">
+        <textarea name="" id="message" placeholder="대화내용이 들어갑니다."></textarea>
+        <p class="txt_count">100/100</p>
+        <input type="button" value="전송" id="send">
+        <input type="button" value="초기화" id="reset">
+
+        <div class="clearfix"></div>
+      </footer>
+  </div>
+
+  <h3>실습1. 사용자 작성글 말풍선 클릭시 해당 글 삭제하기</h3>
+  <h3>실습2. 사용자 글 입력시 상대방 말풍선 1초뒤 답변하기</h3>
+  <h3>실습3. 사용자 작성한 글 갯수 상단 헤더에 표시하기</h3>
+
+  <br><br><br><br><br><br><br><br><br><br><br>
+
+  <script>
+    //변수선언
+    const chatbox = document.getElementById('chatbox');
+    const message = document.getElementById('message');
+    const sendBtn = document.getElementById('send');
+    const header = document.querySelector('header > .count');
+    const reply = [
+      '안녕하세요', '반갑습니다', '식사는 하셨나요?', '감기 조심하세요'
+    ];
+    let count = 0; //글 갯수 초기값
+    
+    //자동응답 함수
+      function autoReplay(){
+        let num = Math.floor(Math.random()*reply.length);
+        setTimeout(function(){
+          const div = document.createElement('div');
+          div.classList.add('bubble01');
+          div.textContent=reply[num];
+          chatbox.appendChild(div);
+          chatbox.scrollTop = chatbox.scrollHeight;
+        },500)
+      };
+
+    //메세지 전송함수
+    function sendMessage(){
+      //textarea 입력값 가져오기
+      let txt = message.value.trim();
+      //'trim()' 빈 공백 제거
+      if(txt===''){
+        // alert('메세지를 입력하세요');
+        message.focus();
+        return;
+      }
+      //메세지가 정상적으로 입력되면 출력하기
+      const div = document.createElement('div');
+      const time = document.createElement('span');
+      //div태그요소에 말풍선 서식 적용
+      div.classList.add('bubble02');
+      time.classList.add('time');
+      //입력 텍스트를 div에 삽입
+      div.textContent = txt;
+      //채팅창에 말풍선 추가하기
+      chatbox.appendChild(div);
+      //채팅창에 입력한 내용이 출력되면 기존 입력한 값 초기화
+      message.value="";
+      //커서 포인터 입력창에 표시하기
+      message.focus();
+      //채팅창을 가장 아래로 이동하기
+      chatbox.scrollTop = chatbox.scrollHeight;
+      count++;
+      header.innerHTML=`<span>(메세지 수 : ${count})</span>`;
+      autoReplay(); //1초후 답장 함수 호출
+
+      div.addEventListener('click', function(){
+        this.remove();
+        //글 개수 감소
+        count--;
+        //감소한 글 개수 출력
+        header.innerHTML=`<span>(메세지 수 : ${count})</span>`;
+        if(count==0){
+          header.innerHTML=``;
+        };
+      });
+    };
+    //전송 버튼 클릭시 내용 출력
+    send.addEventListener('click', sendMessage);
+    //키보드 엔터(Enter)키 눌러도 내용이 전송되어야 함.
+    message.addEventListener('keydown', function(e){
+      //enter키 키값
+      if(e.key === 'Enter'){
+        e.preventDefault();
+        sendMessage();
+        header.innerHTML=`<span>(메세지 수 : ${count})</span>`;
+      }
+    });
+    //상대방 메세지 출력함수
+    function receiveMessage(txt){
+      const div = document.createElement('div');
+      div.classList.add('bubble01');
+      div.textContent=txt;
+      chatbox.appendChild(div);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    };
+    receiveMessage('안녕하세요.');
+    //다크모드 
+    //버튼변수
+    const dark = document.getElementById('dark_btn');
+    let btn1 = 0;
+    dark.addEventListener('click',function(){
+      if(btn1==0){
+        chatbox.style.background='#111';
+        btn1=1;
+      }else{
+        chatbox.style.background='#d7e4f2';
+        btn1=0;
+      }
+    });
+    //입력창 초기화 버튼
+    const reset = document.getElementById('reset');
+    reset.addEventListener('click',function(){
+      message.value='';
+      message.focus();
+    });
+  </script>
+</body>
+</html>
