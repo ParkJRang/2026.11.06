@@ -22,7 +22,8 @@ header .btn{
 #close{background:#ff6059; left:8px;}
 #minbtn{background:#ffbf2f; left:26px;}
 #maxbtn{background:#29cd42; left:44px;}
-.btn_1{display:block; position:absolute; transform:translate(330px, -16px)}
+.btn_1{display:block; position:absolute; transform:translate(330px, -16px);}
+.btn_2{display:block; position:absolute; transform:translate(250px, -16px);}
 
 /* 프로필 사진 */
 header img{
